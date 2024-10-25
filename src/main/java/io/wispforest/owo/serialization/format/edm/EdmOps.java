@@ -43,65 +43,65 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
     }
 
     public EdmElement<?> createNumeric(Number number) {
-        return EdmElement.wrapDouble(number.doubleValue());
+        return EdmElement.f64(number.doubleValue());
     }
 
     public EdmElement<?> createByte(byte b) {
-        return EdmElement.wrapByte(b);
+        return EdmElement.i8(b);
     }
 
     public EdmElement<?> createShort(short s) {
-        return EdmElement.wrapShort(s);
+        return EdmElement.i16(s);
     }
 
     public EdmElement<?> createInt(int i) {
-        return EdmElement.wrapInt(i);
+        return EdmElement.i32(i);
     }
 
     public EdmElement<?> createLong(long l) {
-        return EdmElement.wrapLong(l);
+        return EdmElement.i64(l);
     }
 
     public EdmElement<?> createFloat(float f) {
-        return EdmElement.wrapFloat(f);
+        return EdmElement.f32(f);
     }
 
     public EdmElement<?> createDouble(double d) {
-        return EdmElement.wrapDouble(d);
+        return EdmElement.f64(d);
     }
 
     // ---
 
     public EdmElement<?> createBoolean(boolean bl) {
-        return EdmElement.wrapBoolean(bl);
+        return EdmElement.bool(bl);
     }
 
     @Override
     public EdmElement<?> createString(String value) {
-        return EdmElement.wrapString(value);
+        return EdmElement.string(value);
     }
 
     @Override
     public EdmElement<?> createByteList(ByteBuffer input) {
-        return EdmElement.wrapBytes(DataFixUtils.toArray(input));
+        return EdmElement.bytes(DataFixUtils.toArray(input));
     }
 
     // ---
 
     @Override
     public EdmElement<?> createList(Stream<EdmElement<?>> input) {
-        return EdmElement.wrapSequence(input.toList());
+        return EdmElement.sequence(input.toList());
     }
 
     @Override
     public DataResult<EdmElement<?>> mergeToList(EdmElement<?> list, EdmElement<?> value) {
         if (list == empty()) {
-            return DataResult.success(EdmElement.wrapSequence(List.of(value)));
+            return DataResult.success(EdmElement.sequence(List.of(value)));
         } else if (list.value() instanceof List<?> properList) {
             var newList = new ArrayList<EdmElement<?>>((Collection<? extends EdmElement<?>>) properList);
             newList.add(value);
 
-            return DataResult.success(EdmElement.wrapSequence(newList));
+            return DataResult.success(EdmElement.sequence(newList));
         } else {
             return DataResult.error(() -> "Not a sequence: " + list);
         }
@@ -109,7 +109,7 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
 
     @Override
     public EdmElement<?> createMap(Stream<Pair<EdmElement<?>, EdmElement<?>>> map) {
-        return EdmElement.wrapMap(map.collect(Collectors.toMap(pair -> pair.getFirst().cast(), Pair::getSecond)));
+        return EdmElement.consumeMap(map.collect(Collectors.toMap(pair -> pair.getFirst().cast(), Pair::getSecond)));
     }
 
     @Override
@@ -119,12 +119,12 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
         }
 
         if (map == empty()) {
-            return DataResult.success(EdmElement.wrapMap(Map.of(key.cast(), value)));
+            return DataResult.success(EdmElement.consumeMap(Map.of(key.cast(), value)));
         } else if (map.value() instanceof Map<?, ?> properMap) {
             var newMap = new HashMap<String, EdmElement<?>>((Map<String, ? extends EdmElement<?>>) properMap);
             newMap.put(key.cast(), value);
 
-            return DataResult.success(EdmElement.wrapMap(newMap));
+            return DataResult.success(EdmElement.consumeMap(newMap));
         } else {
             return DataResult.error(() -> "Not a map: " + map);
         }
@@ -189,7 +189,7 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
             return DataResult.success(Stream.of());
         } else if (input.value() instanceof Map<?, ?> map) {
             //noinspection rawtypes
-            return DataResult.success(map.entrySet().stream().map(entry -> new Pair(EdmElement.wrapString((String) entry.getKey()), entry.getValue())));
+            return DataResult.success(map.entrySet().stream().map(entry -> new Pair(EdmElement.string((String) entry.getKey()), entry.getValue())));
         } else {
             return DataResult.error(() -> "Not a map: " + input);
         }
@@ -200,13 +200,13 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
     @Override
     public <U> U convertTo(DynamicOps<U> outOps, EdmElement<?> input) {
         if (input == this.empty()) return outOps.empty();
-        return switch (input.type()) {
-            case BYTE -> outOps.createByte(input.cast());
-            case SHORT -> outOps.createShort(input.cast());
-            case INT -> outOps.createInt(input.cast());
-            case LONG -> outOps.createLong(input.cast());
-            case FLOAT -> outOps.createFloat(input.cast());
-            case DOUBLE -> outOps.createDouble(input.cast());
+        return switch (input.type()) { // TODO: DO WE NEED TO HANDLE Unsigned Numbers specifically here or nah?
+            case I8, U8 -> outOps.createByte(input.cast());
+            case I16, U16 -> outOps.createShort(input.cast());
+            case I32, U32 -> outOps.createInt(input.cast());
+            case I64, U64 -> outOps.createLong(input.cast());
+            case F32 -> outOps.createFloat(input.cast());
+            case F64 -> outOps.createDouble(input.cast());
             case BOOLEAN -> outOps.createBoolean(input.cast());
             case STRING -> outOps.createString(input.cast());
             case BYTES -> outOps.createByteList(ByteBuffer.wrap(input.cast()));
@@ -223,7 +223,7 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
             var newMap = new HashMap<String, EdmElement<?>>((Map<? extends String, ? extends EdmElement<?>>) map);
             newMap.remove(key);
 
-            return EdmElement.wrapMap(newMap);
+            return EdmElement.consumeMap(newMap);
         } else {
             return input;
         }

@@ -271,7 +271,7 @@ public class CodecUtils {
                             );
                         });
 
-                        return structEndec.decode(context, LenientEdmDeserializer.of(EdmElement.wrapMap(map)));
+                        return structEndec.decode(context, LenientEdmDeserializer.of(EdmElement.consumeMap(map)));
                     }
                 });
             }
