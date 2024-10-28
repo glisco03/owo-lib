@@ -6,6 +6,7 @@ import net.minecraft.nbt.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implements SelfDescribedDeserializer<NbtElement> {
 
@@ -88,14 +89,10 @@ public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implement
 
     @Override
     public <V> Optional<V> readOptional(SerializationContext ctx, Endec<V> endec) {
-        if (this.isReadingStructField()) {
-            return Optional.of(endec.decode(ctx, this));
-        } else {
-            var struct = this.struct();
-            return struct.field("present", ctx, Endec.BOOLEAN)
-                    ? Optional.of(struct.field("value", ctx, endec))
-                    : Optional.empty();
-        }
+        var struct = this.struct();
+        return struct.field("present", ctx, Endec.BOOLEAN)
+                ? Optional.of(struct.field("value", ctx, endec))
+                : Optional.empty();
     }
 
     // ---
@@ -183,8 +180,7 @@ public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implement
         public V next() {
             return NbtDeserializer.this.frame(
                     this.elements::next,
-                    () -> this.valueEndec.decode(this.ctx, NbtDeserializer.this),
-                    false
+                    () -> this.valueEndec.decode(this.ctx, NbtDeserializer.this)
             );
         }
     }
@@ -221,8 +217,7 @@ public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implement
             var key = this.keys.next();
             return NbtDeserializer.this.frame(
                     () -> this.compound.get(key),
-                    () -> java.util.Map.entry(key, this.valueEndec.decode(this.ctx, NbtDeserializer.this)),
-                    false
+                    () -> java.util.Map.entry(key, this.valueEndec.decode(this.ctx, NbtDeserializer.this))
             );
         }
     }
@@ -236,25 +231,17 @@ public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implement
         }
 
         @Override
-        public <F> @Nullable F field(String name, SerializationContext ctx, Endec<F> endec) {
+        public <F> @Nullable F field(String name, SerializationContext ctx, Endec<F> endec, @Nullable Supplier<F> defaultValueFactory) {
             if (!this.compound.contains(name)) {
-                throw new IllegalStateException("Field '" + name + "' was missing from serialized data, but no default value was provided");
+                if (defaultValueFactory == null) {
+                    throw new IllegalStateException("Field '" + name + "' was missing from serialized data, but no default value was provided");
+                }
+
+                return defaultValueFactory.get();
             }
-
             return NbtDeserializer.this.frame(
                     () -> this.compound.get(name),
-                    () -> endec.decode(ctx, NbtDeserializer.this),
-                    true
-            );
-        }
-
-        @Override
-        public <F> @Nullable F field(String name, SerializationContext ctx, Endec<F> endec, @Nullable F defaultValue) {
-            if (!this.compound.contains(name)) return defaultValue;
-            return NbtDeserializer.this.frame(
-                    () -> this.compound.get(name),
-                    () -> endec.decode(ctx, NbtDeserializer.this),
-                    true
+                    () -> endec.decode(ctx, NbtDeserializer.this)
             );
         }
     }
