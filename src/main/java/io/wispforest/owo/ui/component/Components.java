@@ -55,10 +55,18 @@ public final class Components {
         return new TextAreaComponent(horizontalSizing, verticalSizing);
     }
 
+    public static TextAreaComponent textArea(Sizing sizing) {
+        return textArea(sizing, sizing);
+    }
+
     public static TextAreaComponent textArea(Sizing horizontalSizing, Sizing verticalSizing, String text) {
         var textArea = new TextAreaComponent(horizontalSizing, verticalSizing);
         textArea.setText(text);
         return textArea;
+    }
+
+    public static TextAreaComponent textArea(Sizing sizing, String text) {
+        return textArea(sizing, sizing, text);
     }
 
     // ------------------
@@ -102,6 +110,10 @@ public final class Components {
         return new LabelComponent(text);
     }
 
+    public static LabelComponent label(String string) {
+        return new LabelComponent(Text.literal(string));
+    }
+
     public static CheckboxComponent checkbox(Text message) {
         return new CheckboxComponent(message);
     }
@@ -137,6 +149,8 @@ public final class Components {
     public static BoxComponent box(Sizing horizontalSizing, Sizing verticalSizing) {
         return new BoxComponent(horizontalSizing, verticalSizing);
     }
+
+    public static BoxComponent box(Sizing sizing) {return box(sizing, sizing);}
 
     public static DropdownComponent dropdown(Sizing horizontalSizing) {
         return new DropdownComponent(horizontalSizing);
@@ -183,4 +197,7 @@ public final class Components {
         return component;
     }
 
+    public static <T extends Component> T createWithSizing(Supplier<T> componentMaker, Sizing sizing) {
+        return createWithSizing(componentMaker, sizing, sizing);
+    }
 }

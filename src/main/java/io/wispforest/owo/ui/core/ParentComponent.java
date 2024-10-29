@@ -50,6 +50,16 @@ public interface ParentComponent extends Component {
     }
 
     /**
+     * Set this component to align its children to the center
+     *
+     * @author chyzman
+     */
+    default ParentComponent alignCenter() {
+        this.alignment(HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
+        return this;
+    }
+
+    /**
      * Set how this component should vertically arrange its children
      *
      * @param alignment The new alignment method to use
@@ -79,6 +89,15 @@ public interface ParentComponent extends Component {
      * @param padding The new padding to use
      */
     ParentComponent padding(Insets padding);
+
+    /**
+     * Set the internal padding of this component
+     *
+     * @param padding The new padding to use
+     */
+    default ParentComponent padding(int padding) {
+        return this.padding(Insets.of(padding));
+    }
 
     /**
      * @return The internal padding of this component
