@@ -29,8 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation(rootProject)
-
+//    implementation(rootProject)
     api("io.wispforest:endec:0.1.8")
     api("io.wispforest.endec:netty:0.1.4")
     api("io.wispforest.endec:gson:0.1.5")
