@@ -17,6 +17,8 @@ import net.minecraft.client.render.*;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2d;
@@ -154,6 +156,14 @@ public class OwoUIDrawContext extends DrawContext {
     }
 
     public void drawText(Text text, float x, float y, float scale, int color, TextAnchor anchorPoint) {
+        drawText(text, x, y, scale, color, false, anchorPoint);
+    }
+
+    public void drawText(Text text, float x, float y, float scale, int color, boolean textShadow) {
+        drawText(text, x, y, scale, color, textShadow, TextAnchor.TOP_LEFT);
+    }
+
+    public void drawText(Text text, float x, float y, float scale, int color, boolean textShadow, TextAnchor anchorPoint) {
         final var textRenderer = MinecraftClient.getInstance().textRenderer;
 
         this.getMatrices().push();
@@ -168,8 +178,7 @@ public class OwoUIDrawContext extends DrawContext {
             }
         }
 
-
-        this.drawText(textRenderer, text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color, false);
+        this.drawText(textRenderer, text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color, textShadow);
         this.getMatrices().pop();
     }
 
@@ -177,7 +186,43 @@ public class OwoUIDrawContext extends DrawContext {
         TOP_RIGHT, BOTTOM_RIGHT, TOP_LEFT, BOTTOM_LEFT
     }
 
+    public void drawScrollableText(Text text, int startX, int startY, int endX, int endY, float scale, int color) {
+        drawScrollableText(text, (startX + endX) / 2, startX, startY, endX, endY, scale, color, false);
+    }
+
+    public void drawScrollableText(Text text, int startX, int startY, int endX, int endY, float scale, int color, boolean textShadow) {
+        drawScrollableText(text, (startX + endX) / 2, startX, startY, endX, endY, scale, color, textShadow);
+    }
+
+    public void drawScrollableText(Text text, int centerX, int startX, int startY, int endX, int endY, float scale, int color) {
+        drawScrollableText(text, centerX, startX, startY, endX, endY, scale, color, false);
+    }
+
+    public void drawScrollableText(Text text, int centerX, int startX, int startY, int endX, int endY, float scale, int color, boolean textShadow) {
+        final var textRenderer = MinecraftClient.getInstance().textRenderer;
+
+        float textWidth = textRenderer.getWidth(text) / scale;
+        int drawY = (startY + endY - 9) / 2 + 1;
+        int buttonWidth = endX - startX;
+        if (textWidth > buttonWidth) {
+            double overflow = textWidth - buttonWidth;
+            double time = Util.getMeasuringTimeMs() / 1000.0;
+            double e = Math.max(overflow * 0.5, 3.0);
+            double f = Math.sin(Math.PI / 2 * Math.cos(Math.PI * 2 * time / e)) / 2.0 + 0.5;
+            double g = MathHelper.lerp(f, 0.0, overflow);
+            enableScissor(startX, startY, endX, endY);
+            drawText(text, (float) (startX - g), drawY, scale, color, textShadow);
+            disableScissor();
+        } else {
+            drawText(text, centerX - textWidth / 2, drawY, scale, color, textShadow);
+        }
+    }
+
     public void drawLine(int x1, int y1, int x2, int y2, double thiccness, Color color) {
+        drawLine((double) x1, y1, x2, y2, thiccness, color);
+    }
+
+    public void drawLine(double x1, double y1, double x2, double y2, double thiccness, Color color) {
         var offset = new Vector2d(x2 - x1, y2 - y1).perpendicular().normalize().mul(thiccness * .5d);
 
         var buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
