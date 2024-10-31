@@ -183,10 +183,10 @@ public class CollapsibleContainer extends FlowLayout {
         }
     }
 
-    protected static class SpinnyBoiComponent extends LabelComponent {
+    public static class SpinnyBoiComponent extends LabelComponent {
 
-        protected float rotation = 90;
-        protected float targetRotation = 90;
+        public float rotation = 90;
+        public float targetRotation = 90;
 
         public SpinnyBoiComponent() {
             super(Text.literal(">"));

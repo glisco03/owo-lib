@@ -284,6 +284,24 @@ public class ScrollContainer<C extends Component> extends WrappingParentComponen
         return this;
     }
 
+    public ScrollContainer<C> setCurrentScrollPosition(double currentScrollPosition) {
+        this.currentScrollPosition = currentScrollPosition;
+        return this;
+    }
+
+    public double getCurrentScrollPosition() {
+        return this.currentScrollPosition;
+    }
+
+    public ScrollContainer<C> setScrollOffset(double scrollOffset) {
+        this.scrollOffset = scrollOffset;
+        return this;
+    }
+
+    public double getScrollOffset() {
+        return this.scrollOffset;
+    }
+
     /**
      * Set the thickness of this container's scrollbar,
      * in logical pixels
