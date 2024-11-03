@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-//    implementation(rootProject)
+    //implementation(rootProject)
     api("io.wispforest:endec:0.1.8")
     api("io.wispforest.endec:netty:0.1.4")
     api("io.wispforest.endec:gson:0.1.5")
@@ -88,7 +88,7 @@ java {
     val data: MutableMap<String, Set<PublishArtifact>> = mutableMapOf();
 
     for (cfg in rootProject.configurations) {
-        if (cfg.name.equals("runtimeElements")) continue;
+        //if (cfg.name.equals("runtimeElements")) continue;
 
         with(cfg.artifacts) {
             val publishArtifact = this.filter {
