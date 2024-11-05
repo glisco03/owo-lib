@@ -28,6 +28,7 @@ public class BlockComponent extends BaseComponent {
 
     private final BlockState state;
     private final @Nullable BlockEntity entity;
+    protected Vector3f light = new Vector3f(.6f, -.5f, 0.6f), light2 = new Vector3f(-.6f, -.5f, 0.5f);
 
     protected BlockComponent(BlockState state, @Nullable BlockEntity entity) {
         this.state = state;
@@ -48,7 +49,7 @@ public class BlockComponent extends BaseComponent {
         context.getMatrices().translate(-.5, -.5, -.5);
 
         RenderSystem.runAsFancy(() -> {
-            final var vertexConsumers = client.getBufferBuilders().getEntityVertexConsumers();
+            final var vertexConsumers = this.client.getBufferBuilders().getEntityVertexConsumers();
             if (this.state.getRenderType() != BlockRenderType.ENTITYBLOCK_ANIMATED) {
                 this.client.getBlockRenderManager().renderBlockAsEntity(
                         this.state, context.getMatrices(), vertexConsumers,
@@ -63,7 +64,7 @@ public class BlockComponent extends BaseComponent {
                 }
             }
 
-            RenderSystem.setShaderLights(new Vector3f(-1.5f, -.5f, 0), new Vector3f(0, -1, 0));
+            RenderSystem.setShaderLights(this.light, this.light2);
             vertexConsumers.draw();
             DiffuseLighting.enableGuiDepthLighting();
         });

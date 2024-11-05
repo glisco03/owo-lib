@@ -54,6 +54,7 @@ public class SelectUwuScreenScreen extends BaseOwoScreen<FlowLayout> {
         panel.child(Components.button(Text.literal("smolnite"), button -> this.client.setScreen(new SmolComponentTestScreen())));
         panel.child(Components.button(Text.literal("sizenite"), button -> this.client.setScreen(new SizingTestScreen())));
         panel.child(Components.button(Text.literal("parse fail"), button -> this.client.setScreen(new ParseFailScreen())));
+        panel.child(Components.button(Text.literal("blocks"), button -> this.client.setScreen(new BlockTestScreen())));
 
         this.uiAdapter.rootComponent.child(panel);
     }
