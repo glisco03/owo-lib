@@ -5,7 +5,6 @@ import io.wispforest.owo.ui.base.BaseComponent;
 import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.parsing.UIModel;
 import io.wispforest.owo.ui.parsing.UIParsing;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import org.w3c.dom.Element;
 
@@ -69,16 +68,16 @@ public class TextureComponent extends BaseComponent {
         int rightEdge = Math.min(visibleArea.x() + visibleArea.width(), regionWidth);
 
         context.drawTexture(identifier -> OwoUIRenderLayers.getGuiTextured(identifier, this.blend),
-                this.texture,
-                visibleArea.x(),
-                visibleArea.y(),
-                rightEdge - visibleArea.x(),
-                bottomEdge - visibleArea.y(),
-                this.u + visibleArea.x(),
-                this.v + visibleArea.y(),
-                rightEdge - visibleArea.x(),
-                bottomEdge - visibleArea.y(),
-                this.textureWidth, this.textureHeight
+            this.texture,
+            visibleArea.x(),
+            visibleArea.y(),
+            this.u + visibleArea.x(),
+            this.v + visibleArea.y(),
+            rightEdge - visibleArea.x(),
+            bottomEdge - visibleArea.y(),
+            rightEdge - visibleArea.x(),
+            bottomEdge - visibleArea.y(),
+            this.textureWidth, this.textureHeight
         );
 
         if (this.blend) {
