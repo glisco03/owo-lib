@@ -10,3 +10,7 @@ transitive-accessible class net/minecraft/client/gui/DrawContext$ScissorStack
 transitive-extendable method net/minecraft/client/gui/widget/CheckboxWidget <init> (IIILnet/minecraft/text/Text;Lnet/minecraft/client/font/TextRenderer;ZLnet/minecraft/client/gui/widget/CheckboxWidget$Callback;)V
 
 accessible class net/minecraft/registry/RegistryOps$CachedRegistryInfoGetter
+
+extendable method net/minecraft/client/gui/screen/ingame/HandledScreen drawSlotHighlightBack (Lnet/minecraft/client/gui/DrawContext;)V
+extendable method net/minecraft/client/gui/screen/ingame/HandledScreen drawSlotHighlightFront (Lnet/minecraft/client/gui/DrawContext;)V
+extendable method net/minecraft/client/gui/screen/ingame/HandledScreen drawItem (Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V

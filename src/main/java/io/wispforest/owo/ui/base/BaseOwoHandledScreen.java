@@ -13,6 +13,7 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -329,5 +330,45 @@ public abstract class BaseOwoHandledScreen<R extends ParentComponent, S extends 
             super.updateY(y);
             ((SlotAccessor) this.slot).owo$setY(y - BaseOwoHandledScreen.this.y);
         }
+    }
+
+    @Override
+    protected void drawSlotHighlightBack(DrawContext context) {
+        context.translate(0, 0, getOffsetAmount(true));
+
+        super.drawSlotHighlightBack(context);
+    }
+
+    @Override
+    protected void drawSlotHighlightFront(DrawContext context) {
+        super.drawSlotHighlightFront(context);
+
+        context.translate(0, 0, -getOffsetAmount(true));
+    }
+
+    @Override
+    protected void drawItem(DrawContext context, ItemStack stack, int x, int y, @Nullable String amountText) {
+        var offset = getOffsetAmount(false);
+
+        context.translate(0, 0, offset);
+
+        super.drawItem(context, stack, x, y, amountText);
+
+        context.translate(0, 0, -offset);
+    }
+
+    @Override
+    protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
+        var offset = getOffsetAmount(false);
+
+        context.translate(0, 0, offset);
+
+        super.drawMouseoverTooltip(context, x, y);
+
+        context.translate(0, 0, offset);
+    }
+
+    protected int getOffsetAmount(boolean slotRendering) {
+        return 300;
     }
 }
