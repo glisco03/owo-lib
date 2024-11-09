@@ -94,6 +94,10 @@ public final class Layers {
                 for (var instance : getInstances(screen)) {
                     instance.adapter.render(context, mouseX, mouseY, tickDelta);
                 }
+
+                for (var instance : getInstances(screen)) {
+                    instance.adapter.drawTooltip(context, mouseX, mouseY, tickDelta);
+                }
             });
 
             ScreenMouseEvents.allowMouseClick(screeen).register((screen, mouseX, mouseY, button) -> {

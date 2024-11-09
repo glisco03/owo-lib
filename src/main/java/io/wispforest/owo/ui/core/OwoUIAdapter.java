@@ -180,8 +180,6 @@ public class OwoUIAdapter<R extends ParentComponent> implements Element, Drawabl
             GlStateManager._disableScissorTest();
             RenderSystem.disableDepthTest();
 
-            this.rootComponent.drawTooltip(owoContext, mouseX, mouseY, partialTicks, delta);
-
             final var hovered = this.rootComponent.childAt(mouseX, mouseY);
             if (!disposed && hovered != null) {
                 this.cursorAdapter.applyStyle(hovered.cursorStyle());
@@ -198,6 +196,15 @@ public class OwoUIAdapter<R extends ParentComponent> implements Element, Drawabl
             isRendering = false;
             this.captureFrame = false;
         }
+    }
+
+    public void drawTooltip(DrawContext context, int mouseX, int mouseY, float partialTicks) {
+        if (!(context instanceof OwoUIDrawContext)) context = OwoUIDrawContext.of(context);
+        var owoContext = (OwoUIDrawContext) context;
+
+        final var delta = MinecraftClient.getInstance().getRenderTickCounter().getLastFrameDuration();
+
+        this.rootComponent.drawTooltip(owoContext, mouseX, mouseY, partialTicks, delta);
     }
 
     @Override
