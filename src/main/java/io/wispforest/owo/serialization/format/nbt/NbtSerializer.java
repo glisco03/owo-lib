@@ -101,7 +101,7 @@ public class NbtSerializer extends RecursiveSerializer<NbtElement> implements Se
         this.consume(new NbtByteArray(bytes));
     }
 
-    private final Set<NbtElement> encodedOptionals = Collections.newSetFromMap(new WeakHashMap<>());
+    private final Set<IdentityHolder<NbtElement>> encodedOptionals = Collections.newSetFromMap(new WeakHashMap<>());
 
     @Override
     public <V> void writeOptional(SerializationContext ctx, Endec<V> endec, Optional<V> optional) {
@@ -115,7 +115,7 @@ public class NbtSerializer extends RecursiveSerializer<NbtElement> implements Se
 
             var compound = encoded.require("optional representation");
 
-            encodedOptionals.add(compound);
+            encodedOptionals.add(new IdentityHolder<>(compound));
             frameData.setValue(compound);
         });
 
@@ -177,7 +177,7 @@ public class NbtSerializer extends RecursiveSerializer<NbtElement> implements Se
 
                 var element = encoded.require("struct field");
 
-                if (mayOmit && NbtSerializer.this.encodedOptionals.contains(element)) {
+                if (mayOmit && NbtSerializer.this.encodedOptionals.contains(new IdentityHolder<>(element))) {
                     var nbtCompound = (NbtCompound) element;
 
                     if(!nbtCompound.getBoolean("present")) return;
