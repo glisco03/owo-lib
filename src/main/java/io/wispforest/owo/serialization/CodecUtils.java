@@ -29,6 +29,7 @@ import io.wispforest.owo.serialization.format.nbt.NbtDeserializer;
 import io.wispforest.owo.serialization.format.nbt.NbtEndec;
 import io.wispforest.owo.serialization.format.nbt.NbtSerializer;
 import io.wispforest.owo.util.Scary;
+import io.wispforest.owo.util.StackTraceSupplier;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
@@ -434,7 +435,7 @@ public class CodecUtils {
         try {
             return DataResult.success(action.get());
         } catch (Exception e) {
-            return DataResult.error(e::getMessage);
+            return DataResult.error(StackTraceSupplier.of(e));
         }
     }
 
