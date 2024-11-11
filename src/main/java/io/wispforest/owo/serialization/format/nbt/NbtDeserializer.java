@@ -87,8 +87,15 @@ public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implement
         return this.getAs(this.getValue(), NbtByteArray.class).getByteArray();
     }
 
+    private final Set<IdentityHolder<NbtElement>> encodedOptionals = Collections.newSetFromMap(new WeakHashMap<>());
+
     @Override
     public <V> Optional<V> readOptional(SerializationContext ctx, Endec<V> endec) {
+        var value = this.getValue();
+        if (this.encodedOptionals.contains(new IdentityHolder<>(value))) {
+            return Optional.of(endec.decode(ctx, this));
+        }
+
         var struct = this.struct();
         return struct.field("present", ctx, Endec.BOOLEAN)
                 ? Optional.of(struct.field("value", ctx, endec))
@@ -239,8 +246,10 @@ public class NbtDeserializer extends RecursiveDeserializer<NbtElement> implement
 
                 return defaultValueFactory.get();
             }
+            var element = this.compound.get(name);
+            if (defaultValueFactory != null) NbtDeserializer.this.encodedOptionals.add(new IdentityHolder<>(element));
             return NbtDeserializer.this.frame(
-                    () -> this.compound.get(name),
+                    () -> element,
                     () -> endec.decode(ctx, NbtDeserializer.this)
             );
         }
