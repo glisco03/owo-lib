@@ -82,8 +82,9 @@ public class OwoClient {
             OwoConfigCommand.register(event.getDispatcher(), event.getBuildContext());
         });
 
-        if (!Owo.DEBUG) return;
-        OwoDebugCommands.Client.register();
+        if (Owo.DEBUG) {
+            OwoDebugCommands.Client.register();
+        }
 
         modBus.addListener(FMLClientSetupEvent.class, event -> {
             ConfigScreenProviders.forEach((modId, screenFactory) -> {
