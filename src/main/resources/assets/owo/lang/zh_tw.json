@@ -1,0 +1,55 @@
+{
+  "text.owo.itemGroup.tab_template" : [
+    { "index" : 0 },
+    { "text" : " > ", "color" : "gray" },
+    { "index" : 1, "color" : "dark_gray" }
+  ],
+  "text.owo.itemGroup.select_hint" : { "text" : "按住 Shift 點擊以選擇多個", "color" : "gray" },
+  "text.owo.configure_hot_reload.title" : "設定熱重載",
+  "text.owo.configure_hot_reload.choose_file" : "選擇檔案",
+  "text.owo.configure_hot_reload.save" : "儲存",
+  "text.owo.configure_hot_reload.model" : [
+    { "text" : "模型：", "color" : "yellow" },
+    { "index" : 0, "color" : "gray" }
+  ],
+  "text.owo.configure_hot_reload.reload_from.unset" : "未設定",
+  "text.owo.configure_hot_reload.reload_from" : [
+    { "text" : "重載自：", "color" : "yellow" },
+    { "index" : 0, "color" : "gray" }
+  ],
+  "text.owo.config.search" : "搜尋…",
+  "text.owo.config.search.matches" : "%d 個，共 %d 個",
+  "text.owo.config.search.no_matches" : "沒有相符的結果",
+  "text.owo.config.must_restart" : "您所做的某些變更需要重新啟動才能套用",
+  "text.owo.config.button.exit_minecraft" : "退出 Minecraft",
+  "text.owo.config.button.ignore_restart" : "稍後重新啟動",
+  "text.owo.config.button.range.edit_as_text" : "以文字編輯",
+  "text.owo.config.button.range.edit_with_slider" : "使用滑桿編輯",
+  "text.owo.config.applies_after_restart" : [
+    { "text" : "⏻ ", "color" : "#FAEA48" },
+    { "text" : "此選項將在重新啟動後套用", "color" : "gray" }
+  ],
+  "text.owo.config.managed_by_server" : [
+    { "text" : "⚑ ", "color" : "#EB1D36" },
+    { "text" : "此選項正由伺服器管理\n   斷線連線以進行編輯", "color" : "gray" }
+  ],
+  "text.owo.config.button.reload" : "重新載入",
+  "text.owo.config.button.done" : "完成",
+  "text.owo.config.sections_tooltip" : "區段",
+  "text.owo.config.sections" : { "text" : "區段", "underlined" : true },
+  "text.owo.config.list.add_entry" : "新增項目",
+  "text.owo.config.boolean_toggle.enabled" : [
+    "",
+    { "text" : "[", "color" : "gray" },
+    { "text" : "✔", "color" : "#28FFBF" },
+    { "text" : "]", "color" : "gray" },
+    " 已啟用"
+  ],
+  "text.owo.config.boolean_toggle.disabled" : [
+    "",
+    { "text" : "[", "color" : "gray" },
+    { "text" : "❌", "color" : "#EB1D36" },
+    { "text" : "]", "color" : "gray" },
+    " 已停用"
+  ]
+}
