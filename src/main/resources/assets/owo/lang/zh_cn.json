@@ -1,0 +1,55 @@
+{
+  "text.owo.itemGroup.tab_template": [
+    { "index": 0 },
+    { "text": " > ", "color": "gray" },
+    { "index": 1, "color": "dark_gray" }
+  ],
+  "text.owo.itemGroup.select_hint": {"text": "按住 shift 点击以多选", "color": "gray"},
+  "text.owo.configure_hot_reload.title": "配置热重载",
+  "text.owo.configure_hot_reload.choose_file": "选择文件",
+  "text.owo.configure_hot_reload.save": "保存",
+  "text.owo.configure_hot_reload.model": [
+    {"text": "模型：", "color": "yellow"},
+    {"index": 0, "color": "gray"}
+  ],
+  "text.owo.configure_hot_reload.reload_from.unset": "未设置",
+  "text.owo.configure_hot_reload.reload_from": [
+    {"text": "重载于：", "color": "yellow"},
+    {"index": 0, "color": "gray"}
+  ],
+  "text.owo.config.search": "搜索……",
+  "text.owo.config.search.matches": "搜索到 %2$d 中的 %1$d 个匹配结果",
+  "text.owo.config.search.no_matches": "无匹配结果",
+  "text.owo.config.must_restart": "你做出的部分修改需要重启游戏以生效",
+  "text.owo.config.button.exit_minecraft": "退出游戏",
+  "text.owo.config.button.ignore_restart": "稍后我自己再重启",
+  "text.owo.config.button.range.edit_as_text": "输入文本以编辑",
+  "text.owo.config.button.range.edit_with_slider": "使用滚动条以编辑",
+  "text.owo.config.applies_after_restart": [
+    {"text": "⏻ ", "color": "#FAEA48"},
+    {"text": "此选项的修改将在游戏重启后生效", "color": "gray"}
+  ],
+  "text.owo.config.managed_by_server": [
+    {"text": "⚑ ", "color": "#EB1D36"},
+    {"text": "此选项由服务端控制\n退出服务器以编辑本选项", "color": "gray"}
+  ],
+  "text.owo.config.button.reload": "重载",
+  "text.owo.config.button.done": "完成",
+  "text.owo.config.sections_tooltip": "章节",
+  "text.owo.config.sections": {"text": "章节", "underlined": true},
+  "text.owo.config.list.add_entry": "添加入口",
+  "text.owo.config.boolean_toggle.enabled": [
+    "",
+    {"text": "[", "color": "gray"},
+    {"text": "✔", "color": "#28FFBF"},
+    {"text": "]", "color": "gray"},
+    "已启用"
+  ],
+  "text.owo.config.boolean_toggle.disabled": [
+    "",
+    {"text": "[", "color": "gray"},
+    {"text": "❌", "color": "#EB1D36"},
+    {"text": "]", "color": "gray"},
+    "已禁用"
+  ]
+}
