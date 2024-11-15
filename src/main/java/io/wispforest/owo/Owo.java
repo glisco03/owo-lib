@@ -25,6 +25,7 @@ public class Owo implements ModInitializer {
      * To override that behavior, add the {@code -Dowo.debug=false} java argument
      */
     public static final boolean DEBUG;
+    public static final boolean PREVENT_DAYLIGHT_CYCLE;
     public static final Logger LOGGER = LogManager.getLogger("owo");
     private static MinecraftServer SERVER;
 
@@ -43,6 +44,7 @@ public class Owo implements ModInitializer {
         }
 
         DEBUG = debug;
+        PREVENT_DAYLIGHT_CYCLE = Boolean.getBoolean("owo.preventDaylightCycle");
     }
 
     @Override
