@@ -180,25 +180,27 @@ public class OwoDebugCommands {
                             return 0;
                         })));
 
-                if (RenderDoc.isAvailable()) {
+                if (true/*RenderDoc.isAvailable()*/) {
                     dispatcher.register(literal("renderdoc").executes(context -> {
                         MinecraftClient.getInstance().setScreen(new RenderdocScreen());
                         return 1;
-                    }).then(literal("comment")
-                            .then(argument("capture_index", IntegerArgumentType.integer(0))
-                                    .then(argument("comment", StringArgumentType.greedyString())
-                                            .executes(context -> {
-                                                var capture = RenderDoc.getCapture(IntegerArgumentType.getInteger(context, "capture_index"));
-                                                if (capture == null) {
-                                                    context.getSource().sendError(TextOps.concat(Owo.PREFIX, Text.of("no such capture")));
-                                                    return 0;
-                                                }
-
-                                                RenderDoc.setCaptureComments(capture, StringArgumentType.getString(context, "comment"));
-                                                context.getSource().sendFeedback(() -> TextOps.concat(Owo.PREFIX, Text.of("comment updated")), false);
-
-                                                return 1;
-                                            })))));
+                    })
+//                            .then(literal("comment")
+//                            .then(argument("capture_index", IntegerArgumentType.integer(0))
+//                                    .then(argument("comment", StringArgumentType.greedyString())
+//                                            .executes(context -> {
+//                                                var capture = RenderDoc.getCapture(IntegerArgumentType.getInteger(context, "capture_index"));
+//                                                if (capture == null) {
+//                                                    context.getSource().sendError(TextOps.concat(Owo.PREFIX, Text.of("no such capture")));
+//                                                    return 0;
+//                                                }
+//
+//                                                RenderDoc.setCaptureComments(capture, StringArgumentType.getString(context, "comment"));
+//                                                context.getSource().sendFeedback(() -> TextOps.concat(Owo.PREFIX, Text.of("comment updated")), false);
+//
+//                                                return 1;
+//                                            }))))
+                                            );
                 }
             });
         }
