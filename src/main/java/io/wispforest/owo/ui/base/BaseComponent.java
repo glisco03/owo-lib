@@ -61,16 +61,31 @@ public abstract class BaseComponent implements Component {
 
     /**
      * @return The horizontal size this component needs to fit its contents
+     * @throws UnsupportedOperationException if this component doesn't support horizontal content sizing
+     * @deprecated Override {@link Component#calculateHorizontalContentSize(Sizing)}
      */
     protected int determineHorizontalContentSize(Sizing sizing) {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + " does not support Sizing.content() on the horizontal axis");
+        return Component.super.calculateHorizontalContentSize(sizing);
     }
 
     /**
      * @return The vertical size this component needs to fit its contents
+     * @throws UnsupportedOperationException if this component doesn't support vertical content sizing
+     * @deprecated Override {@link Component#calculateVerticalContentSize(Sizing)}
      */
+    @Deprecated
     protected int determineVerticalContentSize(Sizing sizing) {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + " does not support Sizing.content() on the vertical axis");
+        return Component.super.calculateVerticalContentSize(sizing);
+    }
+
+    @Override
+    public int calculateHorizontalContentSize(Sizing sizing) {
+        return this.determineHorizontalContentSize(sizing);
+    }
+
+    @Override
+    public int calculateVerticalContentSize(Sizing sizing) {
+        return this.determineVerticalContentSize(sizing);
     }
 
     @Override
@@ -90,8 +105,8 @@ public abstract class BaseComponent implements Component {
 
         final var margins = this.margins.get();
 
-        this.width = horizontalSizing.inflate(this.space.width() - margins.horizontal(), this::determineHorizontalContentSize);
-        this.height = verticalSizing.inflate(this.space.height() - margins.vertical(), this::determineVerticalContentSize);
+        this.width = horizontalSizing.inflate(this.space.width() - margins.horizontal(), this::calculateHorizontalContentSize);
+        this.height = verticalSizing.inflate(this.space.height() - margins.vertical(), this::calculateVerticalContentSize);
     }
 
     protected void notifyParentIfMounted() {

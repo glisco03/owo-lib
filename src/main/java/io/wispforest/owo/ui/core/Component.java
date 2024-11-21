@@ -147,6 +147,22 @@ public interface Component extends PositionedRectangle {
     AnimatableProperty<Sizing> verticalSizing();
 
     /**
+     * @return The horizontal size this component needs to fit its contents
+     * @throws UnsupportedOperationException if this component doesn't support horizontal content sizing
+     */
+    default int calculateHorizontalContentSize(Sizing sizing) {
+        throw new UnsupportedOperationException(this.getClass().getSimpleName() + " does not support Sizing.content() on the horizontal axis");
+    }
+
+    /**
+     * @return The vertical size this component needs to fit its contents
+     * @throws UnsupportedOperationException if this component doesn't support vertical content sizing
+     */
+    default int calculateVerticalContentSize(Sizing sizing) {
+        throw new UnsupportedOperationException(this.getClass().getSimpleName() + " does not support Sizing.content() on the vertical axis");
+    }
+
+    /**
      * Set the id of this component. If this is not unique across the hierarchy,
      * calls to {@link ParentComponent#childById(Class, String)} may not be deterministic
      *
