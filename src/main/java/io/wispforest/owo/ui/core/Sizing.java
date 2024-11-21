@@ -117,7 +117,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing fill(int max) {
-            return Sizing.fill(SIZING_RANDOM.nextInt(0, max));
+            return Sizing.fill(SIZING_RANDOM.nextInt(max));
         }
 
         /**
@@ -126,7 +126,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing fill() {
-            return Sizing.fill(SIZING_RANDOM.nextInt(0, 100));
+            return Sizing.fill(SIZING_RANDOM.nextInt(100));
         }
 
         /**
@@ -147,7 +147,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing expand(int max) {
-            return Sizing.expand(SIZING_RANDOM.nextInt(0, max));
+            return Sizing.expand(SIZING_RANDOM.nextInt(max));
         }
 
         /**
@@ -156,7 +156,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing expand() {
-            return Sizing.expand(SIZING_RANDOM.nextInt(0, 100));
+            return Sizing.expand(SIZING_RANDOM.nextInt(100));
         }
 
         /**
@@ -177,16 +177,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing fixed(int max) {
-            return Sizing.fixed(SIZING_RANDOM.nextInt(0, max));
-        }
-
-        /**
-         * Generate a random fixed sizing instance with a value between 0 and 100
-         *
-         * @return A random sizing instance
-         */
-        public static Sizing fixed() {
-            return Sizing.fixed(SIZING_RANDOM.nextInt(0, 100));
+            return Sizing.fixed(SIZING_RANDOM.nextInt(max));
         }
 
         /**
@@ -207,7 +198,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing content(int max) {
-            return Sizing.content(SIZING_RANDOM.nextInt(0, max));
+            return Sizing.content(SIZING_RANDOM.nextInt(max));
         }
 
         /**
@@ -216,7 +207,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing content() {
-            return Sizing.content(SIZING_RANDOM.nextInt(0, 100));
+            return Sizing.content(SIZING_RANDOM.nextInt(100));
         }
 
         /**
@@ -228,12 +219,11 @@ public class Sizing implements Animatable<Sizing> {
          * @apiNote May crash if put on a component that doesn't support content sizing
          */
         public static Sizing random(int min, int max) {
-            return switch (SIZING_RANDOM.nextInt(0, 4)) {
+            return switch (SIZING_RANDOM.nextInt(3)) {
                 case 0 -> fill(min, max);
                 case 1 -> expand(min, max);
-                case 2 -> fixed(min, max);
-                case 3 -> content(min, max);
-                default -> throw new IllegalStateException("Unexpected value: " + SIZING_RANDOM.nextInt(0, 4));
+                case 2 -> content(min, max);
+                default -> throw new IllegalStateException("Unexpected value: " + SIZING_RANDOM.nextInt(3));
             };
         }
 
@@ -245,7 +235,7 @@ public class Sizing implements Animatable<Sizing> {
          * @apiNote May crash if put on a component that doesn't support content sizing
          */
         public static Sizing random(int max) {
-            return random(0, max);
+            return random(max);
         }
 
         /**
@@ -255,7 +245,7 @@ public class Sizing implements Animatable<Sizing> {
          * @apiNote May crash if put on a component that doesn't support content sizing
          */
         public static Sizing random() {
-            return random(0, 100);
+            return random(100);
         }
 
         /**
@@ -267,11 +257,10 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing noContent(int min, int max) {
-            return switch (SIZING_RANDOM.nextInt(0, 3)) {
+            return switch (SIZING_RANDOM.nextInt(2)) {
                 case 0 -> fill(min, max);
                 case 1 -> expand(min, max);
-                case 2 -> fixed(min, max);
-                default -> throw new IllegalStateException("Unexpected value: " + SIZING_RANDOM.nextInt(0, 3));
+                default -> throw new IllegalStateException("Unexpected value: " + SIZING_RANDOM.nextInt(2));
             };
         }
 
@@ -283,7 +272,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing noContent(int max) {
-            return noContent(0, max);
+            return noContent(max);
         }
 
         /**
@@ -292,7 +281,7 @@ public class Sizing implements Animatable<Sizing> {
          * @return A random sizing instance
          */
         public static Sizing noContent() {
-            return noContent(0, 100);
+            return noContent(100);
         }
     }
 

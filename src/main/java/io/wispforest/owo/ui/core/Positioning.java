@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 public class Positioning implements Animatable<Positioning> {
 
@@ -92,6 +93,198 @@ public class Positioning implements Animatable<Positioning> {
      */
     public static Positioning layout() {
         return LAYOUT_POSITIONING;
+    }
+
+    /**
+     * A collection of utility methods for generating random positioning instances
+     *
+     * @author chyzman
+     */
+    public static class Random {
+        private static final java.util.Random POSITIONING_RANDOM = new java.util.Random();
+
+
+        /**
+         * Generate a random absolute positioning
+         *
+         * @param minX The minimum x offset
+         * @param maxX The maximum x offset
+         * @param minY The minimum y offset
+         * @param maxY The maximum y offset
+         */
+        public static Positioning absolute(int minX, int maxX, int minY, int maxY) {
+            return Positioning.absolute(
+                    POSITIONING_RANDOM.nextInt(minX, maxX),
+                    POSITIONING_RANDOM.nextInt(minY, maxY)
+            );
+        }
+
+        /**
+         * Generate a random absolute positioning
+         *
+         * @param min The minimum offset
+         * @param max The maximum offset
+         */
+        public static Positioning absolute(int min, int max) {
+            return Positioning.absolute(
+                    POSITIONING_RANDOM.nextInt(min, max),
+                    POSITIONING_RANDOM.nextInt(min, max)
+            );
+        }
+
+        /**
+         * Generate a random absolute positioning
+         *
+         * @param max The maximum offset
+         */
+        public static Positioning absolute(int max) {
+            return Positioning.absolute(
+                    POSITIONING_RANDOM.nextInt(max),
+                    POSITIONING_RANDOM.nextInt(max)
+            );
+        }
+
+        /**
+         * Generate a random relative positioning
+         *
+         * @param minX The minimum x offset
+         * @param maxX The maximum x offset
+         * @param minY The minimum y offset
+         * @param maxY The maximum y offset
+         */
+        public static Positioning relative(int minX, int maxX, int minY, int maxY) {
+            return Positioning.relative(
+                    POSITIONING_RANDOM.nextInt(minX, maxX),
+                    POSITIONING_RANDOM.nextInt(minY, maxY)
+            );
+        }
+
+        /**
+         * Generate a random relative positioning
+         *
+         * @param min The minimum offset
+         * @param max The maximum offset
+         */
+        public static Positioning relative(int min, int max) {
+            return Positioning.relative(
+                    POSITIONING_RANDOM.nextInt(min, max),
+                    POSITIONING_RANDOM.nextInt(min, max)
+            );
+        }
+
+        /**
+         * Generate a random relative positioning
+         *
+         * @param max The maximum offset
+         */
+        public static Positioning relative(int max) {
+            return Positioning.relative(
+                    POSITIONING_RANDOM.nextInt(max),
+                    POSITIONING_RANDOM.nextInt(max)
+            );
+        }
+
+        /**
+         * Generate a random relative positioning
+         */
+        public static Positioning relative() {
+            return Positioning.relative(
+                    POSITIONING_RANDOM.nextInt(100),
+                    POSITIONING_RANDOM.nextInt(100)
+            );
+        }
+
+        /**
+         * Generate a random across positioning
+         *
+         * @param minX The minimum x offset
+         * @param maxX The maximum x offset
+         * @param minY The minimum y offset
+         * @param maxY The maximum y offset
+         */
+        public static Positioning across(int minX, int maxX, int minY, int maxY) {
+            return Positioning.across(
+                    POSITIONING_RANDOM.nextInt(minX, maxX),
+                    POSITIONING_RANDOM.nextInt(minY, maxY)
+            );
+        }
+
+        /**
+         * Generate a random across positioning
+         *
+         * @param min The minimum offset
+         * @param max The maximum offset
+         */
+        public static Positioning across(int min, int max) {
+            return Positioning.across(
+                    POSITIONING_RANDOM.nextInt(min, max),
+                    POSITIONING_RANDOM.nextInt(min, max)
+            );
+        }
+
+        /**
+         * Generate a random across positioning
+         *
+         * @param max The maximum offset
+         */
+        public static Positioning across(int max) {
+            return Positioning.across(
+                    POSITIONING_RANDOM.nextInt(max),
+                    POSITIONING_RANDOM.nextInt(max)
+            );
+        }
+
+        /**
+         * Generate a random across positioning
+         */
+        public static Positioning across() {
+            return Positioning.across(
+                    POSITIONING_RANDOM.nextInt(100),
+                    POSITIONING_RANDOM.nextInt(100)
+            );
+        }
+
+        /**
+         * Generate a random positioning instance
+         *
+         * @param minX The minimum x offset
+         * @param maxX The maximum x offset
+         * @param minY The minimum y offset
+         * @param maxY The maximum y offset
+         */
+        public static Positioning random(int minX, int maxX, int minY, int maxY) {
+            return switch (POSITIONING_RANDOM.nextInt(2)) {
+                case 0 -> relative(minX, maxX, minY, maxY);
+                case 1 -> across(minX, maxX, minY, maxY);
+                default -> throw new IllegalStateException("Unexpected value: " + POSITIONING_RANDOM.nextInt(2));
+            };
+        }
+
+        /**
+         * Generate a random positioning instance
+         *
+         * @param min The minimum offset
+         * @param max The maximum offset
+         */
+        public static Positioning random(int min, int max) {
+            return random(min, max, min, max);
+        }
+
+        /**
+         * Generate a random positioning instance
+         *
+         * @param max The maximum offset
+         */
+        public static Positioning random(int max) {
+            return random(0, max);
+        }
+
+        /**
+         * Generate a random positioning instance
+         */
+        public static Positioning random() {
+            return random(100);
+        }
     }
 
     public enum Type {
