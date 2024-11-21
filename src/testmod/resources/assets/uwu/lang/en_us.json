@@ -45,8 +45,28 @@
   "text.config.uwu.category.nestingTime.nestingTimeIntensifies": "Nesting Time Intensifies",
   "text.config.uwu.option.nestingTime.nestingTimeIntensifies.wowSoNested": "Wow so nested",
   "text.config.uwu.option.someOption": "Hello, yes, this is the predicate constraint tutorial",
-  "text.config.uwu.option.floting": "Floting",
-  "text.config.uwu.option.floting.tooltip": "messes with button?",
+
+  "text.config.uwu.category.rangeTest": "Range Constraint testing",
+  "text.config.uwu.category.rangeTest.tooltip": "chyzman did this part",
+
+  "text.config.uwu.option.rangeTest.completelyEmptyRangeConstraint": "no values?",
+  "text.config.uwu.option.rangeTest.completelyEmptyRangeConstraint.tooltip": "no values :(",
+
+  "text.config.uwu.option.rangeTest.minOnly": "min only",
+  "text.config.uwu.option.rangeTest.minOnly.tooltip": "(it's 0)",
+
+  "text.config.uwu.option.rangeTest.maxOnly": "max only",
+  "text.config.uwu.option.rangeTest.maxOnly.tooltip": "(it's 100)",
+
+  "text.config.uwu.option.rangeTest.minAndMax": "min and max",
+  "text.config.uwu.option.rangeTest.minAndMax.tooltip": "(read the previous 2)",
+
+  "text.config.uwu.option.rangeTest.noSlider": "no slider",
+  "text.config.uwu.option.rangeTest.noSlider.tooltip": "i stole it :3",
+
+  "text.config.uwu.option.rangeTest.startWithTextBox": "start with text box",
+  "text.config.uwu.option.rangeTest.startWithTextBox.tooltip": "u can make it the slider but it starts with the text box.\nI literally just said that, pay attention",
+
   "text.config.uwu.section.bottom": "Bottom Text",
   "text.config.uwu.section.nesting_yo?": "That's Nestnite",
   "text.config.uwu.option.thisIsAStringValue": "Clearly, this is a string value",

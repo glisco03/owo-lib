@@ -117,7 +117,8 @@ public class OptionComponents {
         var toggleButton = optionComponent.childById(ButtonComponent.class, "toggle-button");
 
         var textMode = new MutableBoolean(false);
-        toggleButton.onPress(button -> {
+
+        Consumer<ButtonComponent> toggleAction = button -> {
             textMode.setValue(textMode.isFalse());
 
             if (textMode.isTrue()) {
@@ -136,7 +137,10 @@ public class OptionComponents {
                     ? Text.translatable("text.owo.config.button.range.edit_with_slider")
                     : Text.translatable("text.owo.config.button.range.edit_as_text")
             );
-        });
+        };
+        toggleButton.onPress(toggleAction);
+
+        if (constraint.defaultOption().equals(RangeConstraint.DefaultOptionType.TEXT_BOX)) toggleAction.accept(toggleButton);
 
         optionComponent.child(new SearchAnchorComponent(
                 optionComponent,

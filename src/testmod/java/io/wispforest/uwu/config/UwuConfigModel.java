@@ -4,6 +4,7 @@ import blue.endless.jankson.Comment;
 import io.wispforest.owo.config.Option;
 import io.wispforest.owo.config.annotation.*;
 import io.wispforest.owo.ui.core.Color;
+import net.fabricmc.fabric.api.util.TriState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,28 @@ public class UwuConfigModel {
     @PredicateConstraint("predicateFunction")
     public List<String> someOption = new ArrayList<>(List.of("1", "2", "3", "4", "5"));
 
-    @RangeConstraint(min = 0, max = 10, decimalPlaces = 1)
-    public float floting = 6.9f;
+    @Nest
+    public RangeConstraintTest rangeTest = new RangeConstraintTest();
+
+    public static class RangeConstraintTest {
+        @RangeConstraint()
+        public double completelyEmptyRangeConstraint = 69;
+
+        @RangeConstraint(min = 0)
+        public double minOnly = 69;
+
+        @RangeConstraint(max = 100)
+        public double maxOnly = 69;
+
+        @RangeConstraint(min = 0, max = 100)
+        public double minAndMax = 69;
+
+        @RangeConstraint(min = 0, max = 100, allowSlider = false)
+        public double noSlider = 69;
+
+        @RangeConstraint(min = 0, max = 100, defaultOption = RangeConstraint.DefaultOptionType.TEXT_BOX)
+        public double startWithTextBox = 69;
+    }
 
     public String thisIsAStringValue = "\\bruh?";
 

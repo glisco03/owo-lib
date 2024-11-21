@@ -34,17 +34,19 @@ public interface OptionComponentFactory<T> {
         var field = option.backingField().field();
 
         if (field.isAnnotationPresent(RangeConstraint.class)) {
-            return OptionComponents.createRangeControls(
-                    model, option,
-                    NumberReflection.isFloatingPointType(field.getType())
-                            ? field.getAnnotation(RangeConstraint.class).decimalPlaces()
-                            : 0
-            );
-        } else {
-            return OptionComponents.createTextBox(model, option, configTextBox -> {
-                configTextBox.configureForNumber(option.clazz());
-            });
+            var constraint = field.getAnnotation(RangeConstraint.class);
+            if (constraint.allowSlider() && constraint.min() != -Double.MAX_VALUE && constraint.max() != Double.MAX_VALUE) {
+                return OptionComponents.createRangeControls(
+                        model, option,
+                        NumberReflection.isFloatingPointType(field.getType())
+                                ? constraint.decimalPlaces()
+                                : 0
+                );
+            }
         }
+        return OptionComponents.createTextBox(model, option, configTextBox -> {
+            configTextBox.configureForNumber(option.clazz());
+        });
     };
 
     OptionComponentFactory<? extends CharSequence> STRING = (model, option) -> {
