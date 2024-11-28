@@ -63,18 +63,18 @@ public class OwoClient {
             event.registerReloadListener(new NinePatchTexture.MetadataLoader());
         });
 
-        final var renderdocPath = System.getProperty("owo.renderdocPath");
-        if (renderdocPath != null) {
-            if (Util.getOperatingSystem() == Util.OperatingSystem.WINDOWS) {
-                System.load(renderdocPath);
-            } else {
-                Owo.LOGGER.warn(switch (Util.getOperatingSystem()) {
-                    case LINUX -> LINUX_RENDERDOC_WARNING;
-                    case OSX -> MAC_RENDERDOC_WARNING;
-                    default -> GENERIC_RENDERDOC_WARNING;
-                });
-            }
-        }
+//        final var renderdocPath = System.getProperty("owo.renderdocPath");
+//        if (renderdocPath != null) {
+//            if (Util.getOperatingSystem() == Util.OperatingSystem.WINDOWS) {
+//                System.load(renderdocPath);
+//            } else {
+//                Owo.LOGGER.warn(switch (Util.getOperatingSystem()) {
+//                    case LINUX -> LINUX_RENDERDOC_WARNING;
+//                    case OSX -> MAC_RENDERDOC_WARNING;
+//                    default -> GENERIC_RENDERDOC_WARNING;
+//                });
+//            }
+//        }
 
         ScreenInternals.Client.init();
 
