@@ -11,6 +11,7 @@ import io.wispforest.owo.ui.core.Size;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.resource.JsonDataLoader;
+import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
@@ -258,7 +259,7 @@ public class NinePatchTexture {
         private static final Map<Identifier, NinePatchTexture> LOADED_TEXTURES = new HashMap<>();
 
         public MetadataLoader() {
-            super(CodecUtils.toCodec(NinePatchTexture.ENDEC), "nine_patch_textures");
+            super(CodecUtils.toCodec(NinePatchTexture.ENDEC), ResourceFinder.json("nine_patch_textures"));
         }
 
         @Override

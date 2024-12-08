@@ -36,6 +36,7 @@
     "offline.WorldSaveHandlerMixin",
     "recipe_remainders.CraftingResultSlotMixin",
     "recipe_remainders.JsonDataLoaderMixin",
+    "recipe_remainders.ServerRecipeManagerAccessor",
     "registry.ReferenceAccessor",
     "registry.SimpleRegistryMixin",
     "text.LanguageMixin",

@@ -12,22 +12,21 @@ import io.wispforest.owo.ui.parsing.UIParsing;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
+import net.minecraft.client.item.ItemModelManager;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.item.ModelTransformationMode;
+import net.minecraft.client.render.item.ItemRenderState;
 import net.minecraft.command.argument.ItemStringReader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
@@ -38,17 +37,15 @@ import java.util.stream.Stream;
 
 public class ItemComponent extends BaseComponent {
 
-    protected static final Matrix4f ITEM_SCALING = new Matrix4f().scaling(16, -16, 16);
+    protected static final ItemRenderState ITEM_RENDER_STATE = new ItemRenderState();
 
-    protected final VertexConsumerProvider.Immediate entityBuffers;
-    protected final ItemRenderer itemRenderer;
+    protected final ItemModelManager itemModelManager;
     protected ItemStack stack;
     protected boolean showOverlay = false;
     protected boolean setTooltipFromStack = false;
 
     protected ItemComponent(ItemStack stack) {
-        this.entityBuffers = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-        this.itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+        this.itemModelManager = MinecraftClient.getInstance().getItemModelManager();
         this.stack = stack;
     }
 
@@ -64,8 +61,11 @@ public class ItemComponent extends BaseComponent {
 
     @Override
     public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
-        final boolean notSideLit = !this.itemRenderer.getModel(this.stack, null, null, 0).isSideLit();
+        this.itemModelManager.update(ITEM_RENDER_STATE, this.stack, ModelTransformationMode.GUI, false, null, null, 0);
+
+        final boolean notSideLit = !ITEM_RENDER_STATE.isSideLit();
         if (notSideLit) {
+            context.draw();
             DiffuseLighting.disableGuiDepthLighting();
         }
 
@@ -80,16 +80,12 @@ public class ItemComponent extends BaseComponent {
         matrices.translate(8.0, 8.0, 0.0);
 
         // Vanilla scaling and y inversion
-        if (notSideLit) {
-            matrices.scale(16, -16, 16);
-        } else {
-            matrices.multiplyPositionMatrix(ITEM_SCALING);
-        }
+        matrices.scale(16, -16, 16);
 
         var client = MinecraftClient.getInstance();
 
-        this.itemRenderer.renderItem(this.stack, ModelTransformationMode.GUI, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, matrices, entityBuffers, client.world, 0);
-        this.entityBuffers.draw();
+        ITEM_RENDER_STATE.render(matrices, context.vertexConsumers(), LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV);
+        context.draw();
 
         // Clean up
         matrices.pop();

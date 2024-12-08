@@ -47,27 +47,24 @@ public class BlockComponent extends BaseComponent {
 
         context.getMatrices().translate(-.5, -.5, -.5);
 
-        // TODO: [1.21.2-Porting] Figure out if this is still needed or not
-        //RenderSystem.runAsFancy(() -> {
-            final var vertexConsumers = client.getBufferBuilders().getEntityVertexConsumers();
-            if (this.state.getRenderType() != BlockRenderType.ENTITYBLOCK_ANIMATED) {
-                this.client.getBlockRenderManager().renderBlockAsEntity(
-                        this.state, context.getMatrices(), vertexConsumers,
-                        LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV
-                );
-            }
+        final var vertexConsumers = client.getBufferBuilders().getEntityVertexConsumers();
+        if (this.state.getRenderType() != BlockRenderType.INVISIBLE) {
+            this.client.getBlockRenderManager().renderBlockAsEntity(
+                this.state, context.getMatrices(), vertexConsumers,
+                LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV
+            );
+        }
 
-            if (this.entity != null) {
-                var медведь = this.client.getBlockEntityRenderDispatcher().get(this.entity);
-                if (медведь != null) {
-                    медведь.render(entity, partialTicks, context.getMatrices(), vertexConsumers, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV);
-                }
+        if (this.entity != null) {
+            var медведь = this.client.getBlockEntityRenderDispatcher().get(this.entity);
+            if (медведь != null) {
+                медведь.render(entity, partialTicks, context.getMatrices(), vertexConsumers, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV);
             }
+        }
 
-            RenderSystem.setShaderLights(new Vector3f(-1.5f, -.5f, 0), new Vector3f(0, -1, 0));
-            vertexConsumers.draw();
-            DiffuseLighting.enableGuiDepthLighting();
-        //});
+        RenderSystem.setShaderLights(new Vector3f(-1.5f, -.5f, 0), new Vector3f(0, -1, 0));
+        vertexConsumers.draw();
+        DiffuseLighting.enableGuiDepthLighting();
 
         context.getMatrices().pop();
     }

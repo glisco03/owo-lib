@@ -14,15 +14,18 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
+import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class UiCategory implements DisplayCategory<Display> {
 
@@ -91,6 +94,16 @@ public class UiCategory implements DisplayCategory<Display> {
         @Override
         public CategoryIdentifier<?> getCategoryIdentifier() {
             return ID;
+        }
+
+        @Override
+        public Optional<Identifier> getDisplayLocation() {
+            return Optional.empty();
+        }
+
+        @Override
+        public @Nullable DisplaySerializer<? extends Display> getSerializer() {
+            return null;
         }
     }
 }

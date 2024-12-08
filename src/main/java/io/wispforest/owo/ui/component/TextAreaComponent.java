@@ -117,7 +117,7 @@ public class TextAreaComponent extends EditBoxWidget {
         int cursor = this.editBox.getCursor();
         int selection = ((EditBoxAccessor) this.editBox).owo$getSelectionEnd();
 
-        ((EditBoxAccessor) this.editBox).owo$setWidth(this.width() - this.getPaddingDoubled() - 9);
+        ((EditBoxAccessor) this.editBox).owo$setWidth(this.width() - this.getPadding() - 9);
         this.editBox.setText(this.getText());
 
         super.inflate(space);
