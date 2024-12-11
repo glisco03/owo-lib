@@ -8,6 +8,7 @@ import io.wispforest.owo.ui.core.ParentComponent;
 import io.wispforest.owo.ui.inject.GreedyInputComponent;
 import io.wispforest.owo.ui.util.DisposableScreen;
 import io.wispforest.owo.ui.util.UIErrorToast;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
@@ -91,6 +92,10 @@ public abstract class BaseOwoScreen<R extends ParentComponent> extends Screen im
                 this.build(this.uiAdapter.rootComponent);
 
                 this.uiAdapter.inflateAndMount();
+
+                ScreenEvents.afterRender(this).register((screen, drawContext, mouseX, mouseY, tickDelta) -> {
+                    if (this.uiAdapter != null) this.uiAdapter.drawTooltip(drawContext, mouseX, mouseY, tickDelta);
+                });
             } catch (Exception error) {
                 Owo.LOGGER.warn("Could not initialize owo screen", error);
                 UIErrorToast.report(error);

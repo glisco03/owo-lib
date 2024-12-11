@@ -7,11 +7,13 @@ import io.wispforest.owo.ui.inject.GreedyInputComponent;
 import io.wispforest.owo.ui.util.DisposableScreen;
 import io.wispforest.owo.ui.util.UIErrorToast;
 import io.wispforest.owo.util.pond.OwoSlotExtension;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -82,6 +84,10 @@ public abstract class BaseOwoHandledScreen<R extends ParentComponent, S extends 
                 this.build(this.uiAdapter.rootComponent);
 
                 this.uiAdapter.inflateAndMount();
+
+                ScreenEvents.afterRender(this).register((screen, drawContext, mouseX, mouseY, tickDelta) -> {
+                    if (this.uiAdapter != null) this.uiAdapter.drawTooltip(drawContext, mouseX, mouseY, tickDelta);
+                });
             } catch (Exception error) {
                 Owo.LOGGER.warn("Could not initialize owo screen", error);
                 UIErrorToast.report(error);
@@ -260,6 +266,63 @@ public abstract class BaseOwoHandledScreen<R extends ParentComponent, S extends 
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {}
+
+    @Override
+    protected void drawSlotHighlightBack(DrawContext context) {
+        context.push().translate(0, 0, this.getLayerZOffset(HandledScreenLayer.SLOT));
+        super.drawSlotHighlightBack(context);
+    }
+
+    @Override
+    protected void drawSlotHighlightFront(DrawContext context) {
+        super.drawSlotHighlightFront(context);
+        context.pop();
+    }
+
+    @Override
+    protected void drawItem(DrawContext context, ItemStack stack, int x, int y, @Nullable String amountText) {
+        context.push().translate(0, 0, this.getLayerZOffset(HandledScreenLayer.CURSOR_ITEM));
+        super.drawItem(context, stack, x, y, amountText);
+        context.pop();
+    }
+
+    @Override
+    protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
+        context.push().translate(0, 0, this.getLayerZOffset(HandledScreenLayer.ITEM_TOOLTIP));
+        super.drawMouseoverTooltip(context, x, y);
+        context.pop();
+    }
+
+    /**
+     * Return the z-offset to apply to rendering the given {@code layer}
+     */
+    protected int getLayerZOffset(HandledScreenLayer layer) {
+        return layer == HandledScreenLayer.CURSOR_ITEM ? -6900 : 300;
+    }
+
+    /**
+     * Different layers of handled screen rendering, the z-offset
+     * of which can be adjusted in an owo screen using {@link #getLayerZOffset(HandledScreenLayer)}
+     */
+    protected enum HandledScreenLayer {
+        /**
+         * The items in all slots, along with the highlight
+         * of the hovered slot
+         */
+        SLOT,
+
+        /**
+         * The item currently held by the cursor. More specifically, any item
+         * rendered through the {@link #drawItem(DrawContext, ItemStack, int, int, String)} method
+         */
+        CURSOR_ITEM,
+
+        /**
+         * The tooltip of an item in a slot. More specifically, any tooltip
+         * rendered through {@link #drawMouseoverTooltip(DrawContext, int, int)}
+         */
+        ITEM_TOOLTIP
+    }
 
     public class SlotComponent extends BaseComponent {
 

@@ -64,20 +64,6 @@ public abstract class HandledScreenMixin extends Screen {
         GlStateManager._disableScissorTest();
     }
 
-    // TODO: [1.21.2-Porting] Figure out f such is still needed and how to handle such
-//    @Inject(method = "drawSlotHighlight", at = @At(value = "HEAD"))
-//    private static void enableSlotDepth(DrawContext context, int x, int y, int z, CallbackInfo ci) {
-//        if (!owo$inOwoScreen) return;
-//        RenderSystem.enableDepthTest();
-//        context.getMatrices().translate(0, 0, 300);
-//    }
-//
-//    @Inject(method = "drawSlotHighlight", at = @At("TAIL"))
-//    private static void clearSlotDepth(DrawContext context, int x, int y, int z, CallbackInfo ci) {
-//        if (!owo$inOwoScreen) return;
-//        context.getMatrices().translate(0, 0, -300);
-//    }
-
     @ModifyVariable(method = "mouseClicked", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/SimpleOption;getValue()Ljava/lang/Object;", ordinal = 0), ordinal = 3)
     private int doNoThrow(int slotId, @Local() Slot slot) {
         return (((Object) this instanceof BaseOwoHandledScreen<?, ?>) && slot != null) ? slot.id : slotId;
