@@ -26,6 +26,12 @@ import java.util.function.BiFunction;
  * even if you choose to not use {@link io.wispforest.owo.ui.base.BaseOwoScreen}
  * you can always simply add it as a widget and get most of the functionality
  * working out of the box
+ * <p>
+ * To draw the UI tree managed by this adapter, call {@link OwoUIAdapter#render(DrawContext, int, int, float)}.
+ * Note that this does not draw the current tooltip of the UI - this must be done separately
+ * by invoking {@link #drawTooltip(DrawContext, int, int, float)}. If in a scenario with multiple adapters
+ * or other sources rendering UI elements to the screen, it is generally desirable to delay tooltip
+ * drawing until after all UI is drawn to avoid layering issues.
  *
  * @see io.wispforest.owo.ui.base.BaseOwoScreen
  */
@@ -198,6 +204,13 @@ public class OwoUIAdapter<R extends ParentComponent> implements Element, Drawabl
         }
     }
 
+    /**
+     * Draw the current tooltip of the UI managed by this adapter. This method
+     * must not be called without a previous, corresponding call to {@link #render(DrawContext, int, int, float)}
+     *
+     *
+     * @since 0.12.19
+     */
     public void drawTooltip(DrawContext context, int mouseX, int mouseY, float partialTicks) {
         if (!(context instanceof OwoUIDrawContext)) context = OwoUIDrawContext.of(context);
         var owoContext = (OwoUIDrawContext) context;
