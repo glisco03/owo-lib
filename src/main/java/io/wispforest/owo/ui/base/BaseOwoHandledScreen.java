@@ -297,7 +297,7 @@ public abstract class BaseOwoHandledScreen<R extends ParentComponent, S extends 
      * Return the z-offset to apply to rendering the given {@code layer}
      */
     protected int getLayerZOffset(HandledScreenLayer layer) {
-        return layer == HandledScreenLayer.CURSOR_ITEM ? -6900 : 300;
+        return 300;
     }
 
     /**
