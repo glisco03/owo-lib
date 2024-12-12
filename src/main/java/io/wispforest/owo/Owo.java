@@ -55,8 +55,6 @@ public class Owo implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTING.register(server -> SERVER = server);
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> SERVER = null);
 
-        Wisdom.spread();
-
         if (!DEBUG) return;
 
         OwoDebugCommands.register();
