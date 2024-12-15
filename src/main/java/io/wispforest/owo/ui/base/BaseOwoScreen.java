@@ -92,16 +92,16 @@ public abstract class BaseOwoScreen<R extends ParentComponent> extends Screen im
                 this.build(this.uiAdapter.rootComponent);
 
                 this.uiAdapter.inflateAndMount();
-
-                ScreenEvents.afterRender(this).register((screen, drawContext, mouseX, mouseY, tickDelta) -> {
-                    if (this.uiAdapter != null) this.uiAdapter.drawTooltip(drawContext, mouseX, mouseY, tickDelta);
-                });
             } catch (Exception error) {
                 Owo.LOGGER.warn("Could not initialize owo screen", error);
                 UIErrorToast.report(error);
                 this.invalid = true;
             }
         }
+
+        ScreenEvents.afterRender(this).register((screen, drawContext, mouseX, mouseY, tickDelta) -> {
+            if (this.uiAdapter != null) this.uiAdapter.drawTooltip(drawContext, mouseX, mouseY, tickDelta);
+        });
     }
 
     /**
