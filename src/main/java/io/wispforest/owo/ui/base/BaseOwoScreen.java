@@ -100,8 +100,17 @@ public abstract class BaseOwoScreen<R extends ParentComponent> extends Screen im
         }
 
         ScreenEvents.afterRender(this).register((screen, drawContext, mouseX, mouseY, tickDelta) -> {
-            if (this.uiAdapter != null) this.uiAdapter.drawTooltip(drawContext, mouseX, mouseY, tickDelta);
+            this.drawComponentTooltip(drawContext, mouseX, mouseY, tickDelta);
         });
+    }
+
+    /**
+     * Draw the tooltip of this screen's component tree, invoked
+     * by {@link ScreenEvents#afterRender(Screen)} so that tooltips are
+     * properly rendered above content
+     */
+    protected void drawComponentTooltip(DrawContext drawContext, int mouseX, int mouseY, float tickDelta) {
+        if (this.uiAdapter != null) this.uiAdapter.drawTooltip(drawContext, mouseX, mouseY, tickDelta);
     }
 
     /**
