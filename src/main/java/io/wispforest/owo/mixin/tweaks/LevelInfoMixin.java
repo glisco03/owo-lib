@@ -23,7 +23,7 @@ public class LevelInfoMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void simulationIsForNerds(String name, GameMode gameMode, boolean hardcore, Difficulty difficulty, boolean allowCommands, GameRules gameRules, DataConfiguration dataConfiguration, CallbackInfo ci) {
-        if (!(Owo.DEBUG && FabricLoader.getInstance().isDevelopmentEnvironment())) return;
+        if (!(Owo.DEBUG && Owo.PREVENT_DAYLIGHT_CYCLE && FabricLoader.getInstance().isDevelopmentEnvironment())) return;
 
         this.gameRules.get(GameRules.DO_DAYLIGHT_CYCLE).set(false, null);
         this.gameRules.get(GameRules.DO_WEATHER_CYCLE).set(false, null);
