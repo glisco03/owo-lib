@@ -155,6 +155,7 @@ public class LabelComponent extends BaseComponent {
 
     @Override
     public void inflate(Size space) {
+        super.inflate(space);
         this.wrapLines();
         super.inflate(space);
     }
