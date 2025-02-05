@@ -1,0 +1,46 @@
+{
+  "text.owo.itemGroup.select_hint": {"text": "Umschalt + Linksklick, um mehrere auszuwählen", "color": "gray"},
+  "text.owo.configure_hot_reload.title": "Hot-Reload konfigurieren",
+  "text.owo.configure_hot_reload.choose_file": "Datei auswählen",
+  "text.owo.configure_hot_reload.save": "Speichern",
+  "text.owo.configure_hot_reload.model": [
+    {"text": "Modell: ", "color": "yellow"},
+    {"index": 0, "color": "gray"}
+  ],
+  "text.owo.configure_hot_reload.reload_from.unset": "Aufheben",
+  "text.owo.configure_hot_reload.reload_from": [
+    {"text": "Neuladen aus: ", "color": "yellow"},
+    {"index": 0, "color": "gray"}
+  ],
+  "text.owo.config.search": "Suche...",
+  "text.owo.config.search.matches": "%d von %d",
+  "text.owo.config.search.no_matches": "Keine Treffer",
+  "text.owo.config.must_restart": "Einige der vorgenommenen Veränderungen erfordern einen Neustart",
+  "text.owo.config.button.exit_minecraft": "Minecraft schließen",
+  "text.owo.config.button.ignore_restart": "Später neustarten",
+  "text.owo.config.button.range.edit_as_text": "Mit Textfeld einstellen",
+  "text.owo.config.button.range.edit_with_slider": "Mit Slider einstellen",
+  "text.owo.config.applies_after_restart": [
+    {"text": "⏻ ", "color": "#FAEA48"},
+    {"text": "Diese Einstellung erfordert einen Neustart, um aktiv zu werden", "color": "gray"}
+  ],
+  "text.owo.config.managed_by_server": [
+    {"text": "⚑ ", "color": "#EB1D36"},
+    {"text": "Diese Einstellung wird vom Server verwaltet\n   Trenne die Verbindung, um sie einzustellen", "color": "gray"}
+  ],
+  "text.owo.config.button.reload": "Neuladen",
+  "text.owo.config.button.done": "Fertig",
+  "text.owo.config.sections_tooltip": "Bereiche",
+  "text.owo.config.sections": {"text": "Bereiche", "underlined": true},
+  "text.owo.config.list.add_entry": "Eintrag hinzufügen",
+  "text.owo.config.boolean_toggle.enabled": [
+    "",
+    {"text": "[", "color": "gray"}, {"text": "✔", "color": "#28FFBF"}, {"text": "]", "color": "gray"},
+    " Aktiviert"
+  ],
+  "text.owo.config.boolean_toggle.disabled": [
+    "",
+    {"text": "[", "color": "gray"}, {"text": "❌", "color": "#EB1D36"}, {"text": "]", "color": "gray"},
+    " Deaktiviert"
+  ]
+}
